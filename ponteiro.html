@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Direction Formatter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    textarea {
+      width: 300px;
+      height: 100px;
+      margin: 20px 0;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      font-size: 24px;
+      padding: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Word Direction Formatter</h1>
+  <textarea id="inputWord" placeholder="Enter your word here"></textarea>
+  <div class="buttons">
+    <button onclick="formatWord('up')">⬆️</button>
+    <button onclick="formatWord('up-right')">↗️</button>
+    <button onclick="formatWord('right')">➡️</button>
+    <button onclick="formatWord('down-right')">↘️</button>
+    <button onclick="formatWord('down')">⬇️</button>
+    <button onclick="formatWord('down-left')">↙️</button>
+    <button onclick="formatWord('left')">⬅️</button>
+    <button onclick="formatWord('up-left')">↖️</button>
+  </div>
+  <textarea id="outputWord" readonly placeholder="Result will appear here"></textarea>
+
+  <script>
+    function formatWord(direction) {
+      const input = document.getElementById('inputWord').value;
+      const output = document.getElementById('outputWord');
+      const wordArray = input.split('');
+      let result = '';
+
+      switch (direction) {
+        case 'up':
+          result = wordArray.reverse().join('\n');
+          break;
+        case 'up-right':
+          result = wordArray.reverse().map((char, i) => ' '.repeat(wordArray.length - i - 1) + char).join('\n');
+          break;
+        case 'right':
+          result = input;
+          break;
+        case 'down-right':
+          result = wordArray.map((char, i) => ' '.repeat(i) + char).join('\n');
+          break;
+        case 'down':
+          result = wordArray.join('\n');
+          break;
+        case 'down-left':
+          result = wordArray.map((char, i) => ' '.repeat(wordArray.length - i - 1) + char).join('\n');
+          break;
+        case 'left':
+          result = wordArray.reverse().join('');
+          break;
+        case 'up-left':
+          result = wordArray.reverse().map((char, i) => ' '.repeat(i) + char).join('\n');
+          break;
+      }
+
+      output.value = result;
+      navigator.clipboard.writeText(result).then(() => {
+      });
+    }
+  </script>
+
+</body>
+</html>
